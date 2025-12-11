@@ -240,7 +240,7 @@ export default function Home() {
               priority
             />
             <div className="h-12 w-px bg-slate-300 hidden md:block no-print" />
-            <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tight text-center mb-2 drop-shadow-sm">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tighter text-center mb-2 drop-shadow-sm">
               Plan de Sistemas <span className="bg-gradient-to-r from-teal-500 to-cyan-600 bg-clip-text text-transparent">202</span><AnimatedNumber />
             </h1>
           </div>
