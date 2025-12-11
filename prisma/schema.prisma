@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Modelo Principal: Categoría de Presupuesto
+model BudgetCategory {
+  id        String   @id @default(uuid())
+  title     String   // Cambiado de 'name' a 'title' para coincidir con BudgetCategory en app/data.ts
+  icon      String?  // Nombre del icono Lucide (ej: "Server", "Phone"), opcional
+  color     String?  // Hex code o clase Tailwind
+  items     BudgetItem[]
+  order     Int      @default(0)
+  total     Decimal  @db.Decimal(12, 2) @default(0) // Cache del total
+  percentage String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Modelo Secundario: Ítem Individual
+model BudgetItem {
+  id           String   @id @default(uuid())
+  description  String
+  status       String   @default("pending") // pending, in-progress, completed
+  
+  // Guardamos los costos mensuales como un array de decimales
+  monthlyCosts Decimal[] @db.Decimal(10, 2)
+  
+  // Totales calculados
+  total        Decimal  @db.Decimal(12, 2) @default(0)
+
+  categoryId   String
+  category     BudgetCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

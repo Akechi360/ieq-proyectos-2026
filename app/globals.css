@@ -1,26 +1,223 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Variables de animación para v4 */
+  --animate-flip-in: flipIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  @keyframes flipIn {
+    0% {
+      transform: rotateX(90deg);
+      opacity: 0;
+    }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    100% {
+      transform: rotateX(0deg);
+      opacity: 1;
+    }
   }
 }
 
+/* === FONDO PREMIUM === */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Gradiente base */
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Patrón de puntos sutil (Grid) */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Custom Animations (legacy) */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation Delays */
+.animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+/* Recharts Customization */
+.recharts-tooltip-wrapper {
+  z-index: 100 !important;
+}
+
+/* Table Enhancements */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* ============================================
+   DUAL RENDER STRATEGY - Screen vs Print
+   ============================================ */
+
+/* Screen View */
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+
+  .screen-only {
+    display: block !important;
+  }
+}
+
+/* Print View */
+@media print {
+  .screen-only {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 1.5cm;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  table {
+    border-collapse: collapse !important;
+  }
+
+  .print-only {
+    font-size: 12px !important;
+    line-height: 1.4;
+  }
+
+  .print-only h1 {
+    font-size: 24px !important;
+    font-weight: bold !important;
+    margin-bottom: 16px !important;
+  }
+
+  .print-only h2 {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    margin-top: 24px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .print-only h3 {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .budget-table {
+    width: 100% !important;
+    font-size: 8px !important;
+  }
+
+  .budget-table th,
+  .budget-table td {
+    padding: 3px 4px !important;
+    white-space: nowrap !important;
+    font-size: 8px !important;
+  }
+
+  .budget-table th {
+    font-size: 9px !important;
+    font-weight: 600 !important;
+  }
+
+  .grand-total-table {
+    font-size: 7px !important;
+    font-weight: normal;
+  }
+
+  .grand-total-table th,
+  .grand-total-table td {
+    padding: 2px 3px !important;
+    font-size: 7px !important;
+    white-space: nowrap !important;
+  }
+
+  .print-only svg {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .print-only .recharts-wrapper {
+    font-size: 10px !important;
+  }
 }
